@@ -6,7 +6,7 @@
 
     <groupId>me.home</groupId>
     <artifactId>budget</artifactId>
-    <version>0.5</version>
+    <version>0.6</version>
     <packaging>war</packaging>
 
     <properties>

@@ -7,6 +7,7 @@ import me.home.models.enums.MoneyFlowTypes;
 import me.home.services.interfaces.DataService;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -45,17 +46,17 @@ class DBDataServiceTest {
             add(new MoneyFlow(2, MoneyFlowTypes.EXPENSE, MoneyFlowSubject.FOOD, 100, LocalDate.now()));
         }};
         Month month = Month.of(LocalDate.now().getMonthValue());
-        when(repository.findExpensesByMonth(month)).thenReturn(flows);
+        when(repository.findExpensesByPeriod(any(), any())).thenReturn(flows);
         int actual = underTest.countSpendingByMonth(month);
-        verify(repository, times(1)).findExpensesByMonth(month);
+        verify(repository, times(1)).findExpensesByPeriod(any(), any());
         assertEquals(200, actual);
     }
 
     @Test
     void countSpendingByMonthTestWhenNothingFound() {
-        when(repository.findExpensesByMonth(any())).thenReturn(Collections.emptyList());
+        when(repository.findExpensesByPeriod(any(), any())).thenReturn(Collections.emptyList());
         int actual = underTest.countSpendingByMonth(Month.of(LocalDate.now().getMonthValue()));
-        verify(repository, times(1)).findExpensesByMonth(any());
+        verify(repository, times(1)).findExpensesByPeriod(any(), any());
         assertEquals(0, actual);
     }
 
@@ -67,17 +68,17 @@ class DBDataServiceTest {
             add(new MoneyFlow(3, MoneyFlowTypes.EXPENSE, MoneyFlowSubject.CAR, 100, LocalDate.now()));
         }};
         Month month = Month.of(LocalDate.now().getMonthValue());
-        when(repository.findExpensesByMonth(month)).thenReturn(flows);
+        when(repository.findExpensesByPeriod(any(), any())).thenReturn(flows);
         int actual = underTest.countSpendingBySubjectAndMonth(MoneyFlowSubject.FOOD, month);
-        verify(repository, times(1)).findExpensesByMonth(month);
+        verify(repository, times(1)).findExpensesByPeriod(any(), any());
         assertEquals(200, actual);
     }
 
     @Test
     void countSpendingBySubjectAndMonthTestWhenNothingFound() {
-        when(repository.findExpensesByMonth(any())).thenReturn(Collections.emptyList());
+        when(repository.findExpensesByPeriod(any(), any())).thenReturn(Collections.emptyList());
         int actual = underTest.countSpendingBySubjectAndMonth(MoneyFlowSubject.FOOD, LocalDate.now().getMonth());
-        verify(repository, times(1)).findExpensesByMonth(any());
+        verify(repository, times(1)).findExpensesByPeriod(any(), any());
         assertEquals(0, actual);
     }
 
@@ -87,17 +88,17 @@ class DBDataServiceTest {
             add(new MoneyFlow(1, MoneyFlowTypes.INCOME, MoneyFlowSubject.WORK, 100, LocalDate.now()));
             add(new MoneyFlow(2, MoneyFlowTypes.INCOME, MoneyFlowSubject.WORK, 100, LocalDate.now()));
         }};
-        when(repository.findIncomesByMonth(any())).thenReturn(flows);
+        when(repository.findIncomesByPeriod(any(), any())).thenReturn(flows);
         int actual = underTest.countIncomesByMonth(LocalDate.now().getMonth());
-        verify(repository, times(1)).findIncomesByMonth(LocalDate.now().getMonth());
+        verify(repository, times(1)).findIncomesByPeriod(any(), any());
         assertEquals(200, actual);
     }
 
     @Test
     void countIncomesByMonthTestWhenNothingFound() {
-        when(repository.findIncomesByMonth(any())).thenReturn(Collections.emptyList());
+        when(repository.findIncomesByPeriod(any(), any())).thenReturn(Collections.emptyList());
         int actual = underTest.countIncomesByMonth(LocalDate.now().getMonth());
-        verify(repository, times(1)).findIncomesByMonth(LocalDate.now().getMonth());
+        verify(repository, times(1)).findIncomesByPeriod(any(), any());
         assertEquals(0, actual);
     }
 
@@ -108,17 +109,17 @@ class DBDataServiceTest {
             add(new MoneyFlow(2, MoneyFlowTypes.INCOME, MoneyFlowSubject.WORK, 100, LocalDate.now()));
             add(new MoneyFlow(2, MoneyFlowTypes.INCOME, MoneyFlowSubject.FRIENDS, 100, LocalDate.now()));
         }};
-        when(repository.findIncomesByMonth(any())).thenReturn(flows);
+        when(repository.findIncomesByPeriod(any(), any())).thenReturn(flows);
         int actual = underTest.countIncomesBySubjectAndMonth(MoneyFlowSubject.FRIENDS, LocalDate.now().getMonth());
-        verify(repository, times(1)).findIncomesByMonth(LocalDate.now().getMonth());
+        verify(repository, times(1)).findIncomesByPeriod(any(), any());
         assertEquals(100, actual);
     }
 
     @Test
     void countIncomesBySubjectAndMonthTestWhenNothingFound() {
-        when(repository.findIncomesByMonth(any())).thenReturn(Collections.emptyList());
+        when(repository.findIncomesByPeriod(any(), any())).thenReturn(Collections.emptyList());
         int actual = underTest.countIncomesBySubjectAndMonth(MoneyFlowSubject.WORK, LocalDate.now().getMonth());
-        verify(repository, times(1)).findIncomesByMonth(LocalDate.now().getMonth());
+        verify(repository, times(1)).findIncomesByPeriod(any(), any());
         assertEquals(0, actual);
     }
 }

@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassname: org.h2.Driver
+    url: jdbc:h2:mem:budgetdb;INIT=RUNSCRIPT FROM 'classpath:create_db.sql'\;RUNSCRIPT FROM 'classpath:populate_db.sql'
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true
