@@ -1,0 +1,5 @@
+# for testing
+server:
+  servlet:
+    context-path: /budget
+  port: 8081
