@@ -3,9 +3,13 @@ package me.home.models;
 import me.home.models.enums.MoneyFlowSubject;
 import me.home.models.enums.MoneyFlowTypes;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class MoneyFlow {
+    @Id
     private final long id;
     private final MoneyFlowTypes type;
     private final MoneyFlowSubject subject;
